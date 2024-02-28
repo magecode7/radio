@@ -2,10 +2,10 @@ version: "3"
 services:
   icecast:
     environment:
-      - ICECAST_ADMIN_PASSWORD
-      - ICECAST_PASSWORD
-      - ICECAST_RELAY_PASSWORD
-      - ICECAST_SOURCE_PASSWORD
+      - ICECAST_ADMIN_PASSWORD=admin1337
+      - ICECAST_PASSWORD=pass1337
+      - ICECAST_RELAY_PASSWORD=relay1337
+      - ICECAST_SOURCE_PASSWORD=src1337
     image: moul/icecast:latest
     ports:
       - 8000:8000
@@ -15,13 +15,13 @@ services:
     environment:
       - ICECAST_HOST=icecast
       - ICECAST_PORT=8000
-      - ICECAST_SOURCE_PASSWORD
+      - ICECAST_SOURCE_PASSWORD=src1337
     command: liquidsoap -v --debug /liquidsoap/liquidsoap.liq
     image: moul/liquidsoap:latest
     ports:
       - 8800:8800
     user: liquidsoap
     volumes:
-      - ${LIQUIDSOAP_CONFIG}:/liquidsoap/liquidsoap.liq
-      - ${LIQUIDSOAP_DATA}:/data
+      - ./liquidsoap.liq:/liquidsoap/liquidsoap.liq
+      - ./music:/data
       - /etc/localtime:/etc/localtime:ro
